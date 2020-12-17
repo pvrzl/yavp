@@ -16,6 +16,21 @@ func TestRequiredString(t *testing.T) {
 }
 
 func TestMinLengthString(t *testing.T) {
-	assert.Equal(t, ErrInvalidValue, MinLengthString(4).Validate("hol"), "shoul return error when TestMingLengthString called with invalid value")
-	assert.NoError(t, MinLengthString(4).Validate("hola"), "shoul not return error when TestMingLengthString called with valid value")
+	assert.Equal(t, ErrInvalidValue, MinLengthString(4).Validate("hol"), "should return error when MinLengthString called with invalid value")
+	assert.NoError(t, MinLengthString(4).Validate("hola"), "should not return error when MinLengthString called with valid value")
+}
+
+func TestMaxLengthString(t *testing.T) {
+	assert.Equal(t, ErrInvalidValue, MaxLengthString(4).Validate("holaa"), "should return error when MinLengthString called with invalid value")
+	assert.NoError(t, MaxLengthString(4).Validate("hola"), "should not return error when MinLengthString called with valid value")
+}
+
+func TestIsInString(t *testing.T) {
+	assert.Equal(t, ErrInvalidValue, IsInString([]string{}).Validate("hol"), "should return error when IsInString called with invalid value")
+	assert.NoError(t, IsInString([]string{"hol"}).Validate("hol"), "should not return error when IsInString called with valid value")
+}
+
+func TestIsNotInString(t *testing.T) {
+	assert.Equal(t, ErrInvalidValue, IsNotInString([]string{"hol"}).Validate("hol"), "should return error when IsInString called with invalid value")
+	assert.NoError(t, IsNotInString([]string{}).Validate("hol"), "should not return error when IsInString called with valid value")
 }

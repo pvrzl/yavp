@@ -1,0 +1,9 @@
+NAME                           READY   STATUS    RESTARTS   AGE
+api-657966c4f4-6vbl7           1/1     Running   251        10d
+api-prod-6dc657d945-422nd      1/1     Running   0          15d
+api-prod-6dc657d945-x8bmn      1/1     Running   0          2d8h
+redis-master-78cc8d495-6mpdh   1/1     Running   0          5d10h
+web-6dc65bd4d4-hrrr2           1/1     Running   0          2d2h
+web-prod-8fb9596b8-chpbm       1/1     Running   0          8d
+web-prod-8fb9596b8-x5bjw       1/1     Running   0          8d
+web-seo-78f569f94c-4bldk       1/1     Running   699        8d
