@@ -16,10 +16,6 @@ type (
 var (
 	// ErrRequired is a error message for required value
 	ErrRequired = errors.New("is required")
-	// ErrLatLong is a error message for invalid lat long
-	ErrLatLong = errors.New("invalid lat long")
-	// ErrIPError is a error message for invalid IP address
-	ErrIPError = errors.New("invalid IP address")
 	// ErrInvalidValue is a error message for invalid generic value
 	ErrInvalidValue = errors.New("invalid value")
 )
