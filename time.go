@@ -57,3 +57,13 @@ func IsBefore(t time.Time) timeValidator {
 		message:   ErrInvalidValue,
 	}
 }
+
+func is(a time.Time) func(time.Time, error) error {
+	return func(t time.Time, e error) error {
+		if t.Equal(a) {
+			return nil
+		}
+
+		return e
+	}
+}
