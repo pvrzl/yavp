@@ -5,22 +5,22 @@ import (
 	"time"
 )
 
-type timeValidator struct {
+type TimeValidator struct {
 	validator func(time.Time, error) error
 	message   error
 }
 
-func (tv timeValidator) WithError(message error) timeValidator {
+func (tv TimeValidator) WithError(message error) TimeValidator {
 	tv.message = message
 	return tv
 }
 
-func (tv timeValidator) WithErrorMessage(message string) timeValidator {
+func (tv TimeValidator) WithErrorMessage(message string) TimeValidator {
 	tv.message = errors.New(message)
 	return tv
 }
 
-func (tv timeValidator) Validate(t time.Time) error {
+func (tv TimeValidator) Validate(t time.Time) error {
 	return tv.validator(t, tv.message)
 }
 
@@ -34,8 +34,8 @@ func isAfter(a time.Time) func(time.Time, error) error {
 	}
 }
 
-func IsAfter(t time.Time) timeValidator {
-	return timeValidator{
+func IsAfter(t time.Time) TimeValidator {
+	return TimeValidator{
 		validator: isAfter(t),
 		message:   ErrInvalidValue,
 	}
@@ -51,8 +51,8 @@ func isBefore(a time.Time) func(time.Time, error) error {
 	}
 }
 
-func IsBefore(t time.Time) timeValidator {
-	return timeValidator{
+func IsBefore(t time.Time) TimeValidator {
+	return TimeValidator{
 		validator: isBefore(t),
 		message:   ErrInvalidValue,
 	}

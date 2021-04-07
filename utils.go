@@ -8,3 +8,7 @@ func stringInSlice(a string, list []string) bool {
 	}
 	return false
 }
+
+func yavpConfig() error {
+	return nil
+}

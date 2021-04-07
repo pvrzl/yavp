@@ -2,22 +2,22 @@ package yavp
 
 import "errors"
 
-type stringValidator struct {
+type StringValidator struct {
 	validator func(string, error) error
 	message   error
 }
 
-func (sv stringValidator) WithError(message error) stringValidator {
+func (sv StringValidator) WithError(message error) StringValidator {
 	sv.message = message
 	return sv
 }
 
-func (sv stringValidator) WithErrorMessage(message string) stringValidator {
+func (sv StringValidator) WithErrorMessage(message string) StringValidator {
 	sv.message = errors.New(message)
 	return sv
 }
 
-func (sv stringValidator) Validate(s string) error {
+func (sv StringValidator) Validate(s string) error {
 	return sv.validator(s, sv.message)
 }
 
@@ -30,7 +30,7 @@ func requiredString(s string, e error) error {
 }
 
 // RequiredString is a require validator(string)
-var RequiredString = stringValidator{
+var RequiredString = StringValidator{
 	validator: requiredString,
 	message:   ErrRequired,
 }
@@ -46,8 +46,8 @@ func minLengthString(l int) func(string, error) error {
 }
 
 // MinLengthString is a minimum length validator(string)
-func MinLengthString(l int) stringValidator {
-	return stringValidator{
+func MinLengthString(l int) StringValidator {
+	return StringValidator{
 		validator: minLengthString(l),
 		message:   ErrInvalidValue,
 	}
@@ -64,8 +64,8 @@ func maxLengthString(l int) func(string, error) error {
 }
 
 // MaxLengthString is a maximum length validator(string)
-func MaxLengthString(l int) stringValidator {
-	return stringValidator{
+func MaxLengthString(l int) StringValidator {
+	return StringValidator{
 		validator: maxLengthString(l),
 		message:   ErrInvalidValue,
 	}
@@ -82,8 +82,8 @@ func isInString(list []string) func(string, error) error {
 }
 
 // IsInString is a method to check wether the string is in the list or not
-func IsInString(list []string) stringValidator {
-	return stringValidator{
+func IsInString(list []string) StringValidator {
+	return StringValidator{
 		validator: isInString(list),
 		message:   ErrInvalidValue,
 	}
@@ -100,9 +100,21 @@ func isNotInString(list []string) func(string, error) error {
 }
 
 // IsNotInString is a method to check wether the string is not in the list or not
-func IsNotInString(list []string) stringValidator {
-	return stringValidator{
+func IsNotInString(list []string) StringValidator {
+	return StringValidator{
 		validator: isNotInString(list),
 		message:   ErrInvalidValue,
 	}
+}
+
+func ValidateString(key string, value string, validators ...StringValidator) error {
+	errors := make(Errors)
+	for _, validator := range validators {
+		if err := validator.Validate(value); err != nil {
+			errors[key] = err
+			return errors
+		}
+	}
+
+	return nil
 }

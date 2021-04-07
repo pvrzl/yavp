@@ -13,8 +13,8 @@ func regexValidation(pattern string) func(string, error) error {
 }
 
 // RegexValidation is a function that detect wether the string match patter or not
-func RegexValidation(pattern string) stringValidator {
-	return stringValidator{
+func RegexValidation(pattern string) StringValidator {
+	return StringValidator{
 		validator: regexValidation(pattern),
 		message:   ErrInvalidValue,
 	}
