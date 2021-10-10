@@ -1,6 +1,9 @@
 package yavp
 
-import "errors"
+import (
+	"errors"
+	"strings"
+)
 
 type StringValidator struct {
 	validator func(string, error) error
@@ -103,6 +106,40 @@ func isNotInString(list []string) func(string, error) error {
 func IsNotInString(list []string) StringValidator {
 	return StringValidator{
 		validator: isNotInString(list),
+		message:   ErrInvalidValue,
+	}
+}
+
+func isContains(seed string) func(string, error) error {
+	return func(s string, e error) error {
+		if !strings.Contains(s, seed) {
+			return e
+		}
+		return nil
+	}
+}
+
+// IsContains is a method to check wether the string contains specifc substring
+func IsContains(seed string) StringValidator {
+	return StringValidator{
+		validator: isContains(seed),
+		message:   ErrInvalidValue,
+	}
+}
+
+func isEquals(comparison string) func(string, error) error {
+	return func(s string, e error) error {
+		if !strings.EqualFold(s, comparison) {
+			return e
+		}
+		return nil
+	}
+}
+
+// IsEquals is a method to check wether the string equals with another string(case insensitive)
+func IsEquals(comparison string) StringValidator {
+	return StringValidator{
+		validator: isEquals(comparison),
 		message:   ErrInvalidValue,
 	}
 }

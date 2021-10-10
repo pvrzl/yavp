@@ -32,6 +32,10 @@ func TestRegex(t *testing.T) {
 
 	assert.Equal(t, ErrInvalidValue, IsEmail.Validate("ef@"), invalidTestComment)
 	assert.NoError(t, IsEmail.Validate("ef@ef.com"), validTestComment)
+
+	assert.Equal(t, ErrInvalidValue, IsCreditCard.Validate("foo"), invalidTestComment)
+	assert.NoError(t, IsCreditCard.Validate("375556917985515"), validTestComment)
+	assert.NoError(t, IsCreditCard.Validate("4716461583322103"), validTestComment)
 }
 
 // func BenchmarkRegex(b *testing.B) {

@@ -34,3 +34,13 @@ func TestIsNotInString(t *testing.T) {
 	assert.Equal(t, ErrInvalidValue, IsNotInString([]string{"hol"}).Validate("hol"), "should return error when IsInString called with invalid value")
 	assert.NoError(t, IsNotInString([]string{}).Validate("hol"), "should not return error when IsInString called with valid value")
 }
+
+func TestIsContains(t *testing.T) {
+	assert.Equal(t, ErrInvalidValue, IsContains("haha").Validate("hol"), "should return error when IsContains called with invalid value")
+	assert.NoError(t, IsContains("ol").Validate("hol"), "should not return error when IsContains called with valid value")
+}
+
+func TestIsEquals(t *testing.T) {
+	assert.Equal(t, ErrInvalidValue, IsEquals("haha").Validate("hol"), "should return error when IsEquals called with invalid value")
+	assert.NoError(t, IsEquals("hol").Validate("hol"), "should not return error when IsEquals called with valid value")
+}
