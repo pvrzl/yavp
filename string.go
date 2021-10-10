@@ -1,6 +1,7 @@
 package yavp
 
 import (
+	"encoding/json"
 	"errors"
 	"strings"
 )
@@ -140,6 +141,23 @@ func isEquals(comparison string) func(string, error) error {
 func IsEquals(comparison string) StringValidator {
 	return StringValidator{
 		validator: isEquals(comparison),
+		message:   ErrInvalidValue,
+	}
+}
+
+func isJSON() func(string, error) error {
+	return func(s string, e error) error {
+		if !json.Valid([]byte(s)) {
+			return e
+		}
+		return nil
+	}
+}
+
+// IsJSON is a method to check wether the string is a valid json or not
+func IsJSON() StringValidator {
+	return StringValidator{
+		validator: isJSON(),
 		message:   ErrInvalidValue,
 	}
 }

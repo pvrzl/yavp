@@ -44,3 +44,8 @@ func TestIsEquals(t *testing.T) {
 	assert.Equal(t, ErrInvalidValue, IsEquals("haha").Validate("hol"), "should return error when IsEquals called with invalid value")
 	assert.NoError(t, IsEquals("hol").Validate("hol"), "should not return error when IsEquals called with valid value")
 }
+
+func TestIsJSON(t *testing.T) {
+	assert.Equal(t, ErrInvalidValue, IsJSON().Validate(`{ key: "value" }`), "should return error when IsJSON called with invalid value")
+	assert.NoError(t, IsJSON().Validate(`{ "key": "value" }`), "should not return error when IsJSON called with valid value")
+}
