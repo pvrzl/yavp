@@ -231,6 +231,5 @@ func ValidateString(key string, value string, validators ...StringValidator) err
 			return errors
 		}
 	}
-
 	return nil
 }

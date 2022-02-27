@@ -12,7 +12,7 @@ type TimeValidator struct {
 
 func NewTimeValidator(f func(time.Time, error) error, err error) TimeValidator {
 	return TimeValidator{
-		f, 
+		f,
 		err,
 	}
 }
@@ -65,7 +65,7 @@ func IsBefore(t time.Time) TimeValidator {
 	}
 }
 
-func is(a time.Time) func(time.Time, error) error {
+func isTimeEqual(a time.Time) func(time.Time, error) error {
 	return func(t time.Time, e error) error {
 		if t.Equal(a) {
 			return nil
@@ -73,4 +73,23 @@ func is(a time.Time) func(time.Time, error) error {
 
 		return e
 	}
+}
+
+func IsTimeEqual(t time.Time) TimeValidator {
+	return TimeValidator{
+		validator: isTimeEqual(t),
+		message:   ErrInvalidValue,
+	}
+}
+
+func ValidateTime(key string, value time.Time, validators ...TimeValidator) error {
+	errors := make(Errors)
+	for _, validator := range validators {
+		if err := validator.Validate(value); err != nil {
+			errors[key] = err
+			return errors
+		}
+	}
+
+	return nil
 }
