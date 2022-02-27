@@ -49,3 +49,13 @@ func TestIsJSON(t *testing.T) {
 	assert.Equal(t, ErrInvalidValue, IsJSON().Validate(`{ key: "value" }`), "should return error when IsJSON called with invalid value")
 	assert.NoError(t, IsJSON().Validate(`{ "key": "value" }`), "should not return error when IsJSON called with valid value")
 }
+
+func TestIsASCII(t *testing.T) {
+	assert.Equal(t, ErrInvalidValue, IsASCII().Validate(`ｆｏｏbar`), "should return error when called with invalid value")
+	assert.NoError(t, IsASCII().Validate(`foobar`), "should not return error when called with valid value")
+}
+
+func TestIsIP(t *testing.T) {
+	assert.Equal(t, ErrInvalidValue, IsIP().Validate(`abc`), "should return error when called with invalid value")
+	assert.NoError(t, IsIP().Validate(`127.0.0.1`), "should not return error when called with valid value")
+}

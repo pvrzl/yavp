@@ -10,6 +10,13 @@ type TimeValidator struct {
 	message   error
 }
 
+func NewTimeValidator(f func(time.Time, error) error, err error) TimeValidator {
+	return TimeValidator{
+		f, 
+		err,
+	}
+}
+
 func (tv TimeValidator) WithError(message error) TimeValidator {
 	tv.message = message
 	return tv

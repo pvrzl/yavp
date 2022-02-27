@@ -3,12 +3,21 @@ package yavp
 import (
 	"encoding/json"
 	"errors"
+	"net"
 	"strings"
+	"unicode"
 )
 
 type StringValidator struct {
 	validator func(string, error) error
 	message   error
+}
+
+func NewStringValidator(f func(string, error) error, err error) StringValidator {
+	return StringValidator{
+		f,
+		err,
+	}
 }
 
 func (sv StringValidator) WithError(message error) StringValidator {
@@ -158,6 +167,37 @@ func isJSON() func(string, error) error {
 func IsJSON() StringValidator {
 	return StringValidator{
 		validator: isJSON(),
+		message:   ErrInvalidValue,
+	}
+}
+
+func isASCII(s string, e error) error {
+	for i := 0; i < len(s); i++ {
+		if s[i] > unicode.MaxASCII {
+			return e
+		}
+	}
+	return nil
+}
+
+// IsASCII is a method to check wether the string contains acii Only
+func IsASCII() StringValidator {
+	return StringValidator{
+		validator: isASCII,
+		message:   ErrInvalidValue,
+	}
+}
+
+func isIP(s string, e error) error {
+	if net.ParseIP(s) == nil {
+		return e
+	}
+	return nil
+}
+
+func IsIP() StringValidator {
+	return StringValidator{
+		validator: isIP,
 		message:   ErrInvalidValue,
 	}
 }
