@@ -202,6 +202,27 @@ func IsIP() StringValidator {
 	}
 }
 
+func isJWT(s string, e error) error {
+	dotSplit := strings.Split(s, ".")
+	length := len(dotSplit)
+	if length > 3 || length < 2 {
+		return e
+	}
+	for i, b := range dotSplit {
+		if err := IsBase64.WithError(e).Validate(b); err != nil && i != 2 {
+			return e
+		}
+	}
+	return nil
+}
+
+func IsJWT() StringValidator {
+	return StringValidator{
+		validator: isJWT,
+		message:   ErrInvalidValue,
+	}
+}
+
 func ValidateString(key string, value string, validators ...StringValidator) error {
 	errors := make(Errors)
 	for _, validator := range validators {

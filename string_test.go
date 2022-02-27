@@ -59,3 +59,8 @@ func TestIsIP(t *testing.T) {
 	assert.Equal(t, ErrInvalidValue, IsIP().Validate(`abc`), "should return error when called with invalid value")
 	assert.NoError(t, IsIP().Validate(`127.0.0.1`), "should not return error when called with valid value")
 }
+
+func TestIsJWT(t *testing.T) {
+	assert.Equal(t, ErrInvalidValue, IsJWT().Validate(`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9`), "should return error when called with invalid value")
+	assert.NoError(t, IsJWT().Validate(`eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dnZWRJbkFzIjoiYWRtaW4iLCJpYXQiOjE0MjI3Nzk2Mzh9.gzSraSYS8EXBxLN_oWnFSRgCzcmJmMjLiuyu5CSpyHI`), "should not return error when called with valid value")
+}
