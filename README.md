@@ -25,10 +25,10 @@ type Form struct {
 
 func (f *Form) Validate() error {
 	return yavp.MergeErrors(
-		yavp.ValidateString(
-			"name",
-			f.Name,
-			yavp.RequiredString,
+		yavp.GenericValidator(
+			"name", 
+			yavp.RequiredString.Validate(f.Name),
+			yavp.When(f.Name != "foo", errors.New("error occured")),
 		),
 		yavp.ValidateString(
 			"address",
