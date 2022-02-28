@@ -1,5 +1,5 @@
 ## YAVP (Yet Another Validation Package)
-
+[![GoDoc](https://godoc.org/github.com/pvrzl/yavp?status.png)](https://godoc.org/github.com/pvrzl/yavp)
 the name says it all, inspired by https://www.npmjs.com/package/validator
 
 #### Features
