@@ -51,7 +51,7 @@ the output of above code will be
 Change error message
 ```go
 yavp.RequiredString.WithError(errors.New("is required"))
-yavp.RequiredString.WithErrorMessage("is required")
+yavp.RequiredString.WithErrorMessage("is required").Validate("hello")
 ```
 
 Custom Validation 
