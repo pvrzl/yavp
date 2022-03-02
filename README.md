@@ -56,7 +56,7 @@ yavp.RequiredString.WithErrorMessage("is required").Validate("hello")
 
 Custom Validation 
 ```go
-func IsFoo() StringValidator {
+func IsFoo() yavp.StringValidator {
 	return yavp.NewStringValidator(func(s string, err error) error {
 		if s == "foo" {
 			return nil
